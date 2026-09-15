@@ -1,0 +1,20 @@
+# requirements.txt -- MentorBF
+# Dépendances nécessaires en PRODUCTION (chat_client + resume_client sur
+# Claude, embeddings RAG toujours sur OpenAI -- voir le commentaire dans
+# Mentors.py au-dessus de chat_client pour l'explication de ce choix).
+#
+# NE CONTIENT PAS les dépendances des scripts ponctuels de collecte de
+# données (16_scrape_publications.py, 26_scrape_cames_online.py, etc.)
+# -- ceux-ci se lancent une fois en local pour construire/actualiser
+# mentors.json, jamais depuis l'app déployée elle-même. Si tu déploies
+# aussi actualiser_progres.py comme tâche planifiée sur le même serveur,
+# ajoute alors : beautifulsoup4, pandas, scikit-learn.
+
+shiny>=1.2.0
+chatlas[anthropic]>=0.9.0
+openai>=1.0.0          # utilisé uniquement pour les embeddings (rag_utils.py)
+python-dotenv>=1.0.0
+requests>=2.31.0
+pypdf>=4.0.0
+openpyxl>=3.1.0        # exports Excel (auth_utils.py)
+numpy>=1.26.0           # calcul de similarité (rag_utils.py)

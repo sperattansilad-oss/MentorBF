@@ -1,0 +1,392 @@
+{
+  "UNIVERSITE NAZI BONI (Ex UNIVERSITE POLYTECHNIQUE BOBO DIOULASSO)": {
+    "url": "https://www.oreilleducampus.org/universite-nazi-boni-bobo-dioulasso.html",
+    "etablissements": {
+      "UFR ST (SCIENCES ET TECHNIQUES) BOBO DIOULASSO": {
+        "url": "https://www.oreilleducampus.org/universite-nazi-boni-bobo-dioulasso/119-ufr-sciences-et-techniques-st-unb-bobo-dioulasso-science-technique-biologie-mathematique-informatique-physique-etudes-formation-etude-en-filiere-offres-formations-diplome-licence-professionnelle-master-recherche-professionnel-doctorat-debouche.html",
+        "filieres": [
+          "Sciences Biologiques (SB) ;",
+          "Mathématique, Physique, Informatique (MPI)"
+        ]
+      },
+      "UFR SJP (SCIENCES POLITIQUES ET JURIDIQUES) BOBO DIOULASSO": {
+        "url": "https://www.oreilleducampus.org/universite-nazi-boni-bobo-dioulasso/120-ufr-sciences-politiques-et-juridiques-sjp-unb-bobo-dioulasso-science-politique-juridique-droit-prive-public-etudes-formation-etude-en-filiere-offres-formations-diplome-licence-professionnelle-master-recherche-professionnel-doctorat-debouche.html",
+        "filieres": [
+          "Droit"
+        ]
+      },
+      "UFR SEG (SCIENCES ECONOMIQUES ET DE GESTION) BOBO DIOULASSO": {
+        "url": "https://www.oreilleducampus.org/universite-nazi-boni-bobo-dioulasso/121-ufr-sciences-economiques-et-juridiques-seg-unb-bobo-dioulasso-economie-science-gestion-economique-etudes-formation-etude-en-filiere-offres-formations-diplome-licence-professionnelle-master-recherche-professionnel-doctorat-debouche.html",
+        "filieres": [
+          "Sciences économiques ;",
+          "Gestion"
+        ]
+      },
+      "ECOLE SUPERIEURE D'INFORMATIQUE (ESI)": {
+        "url": "https://www.oreilleducampus.org/universite-nazi-boni-bobo-dioulasso/122-ecole-superieure-d-informatique-esi-unb-bobo-dioulasso-informatique-programmation-reseau-systeme-logiciel-systemes-logicielle-etudes-formation-etude-en-filiere-offres-formations-diplome-licence-professionnelle-master-professionnel-debouche.html",
+        "filieres": [
+          "Analyse et Programmation (AP) ;",
+          "Réseaux et Maintenance Informatique (RéMI)"
+        ]
+      },
+      "INSTITUT DES SCIENCES DE LA SANTE (INSSA) DE BOBO DIOULASSO": {
+        "url": "https://www.oreilleducampus.org/universite-nazi-boni-bobo-dioulasso/123-institut-des-sciences-de-la-sante-inssa-unb-bobo-dioulasso-medecine-science-sante-etudes-formation-etude-en-filiere-offres-formations-diplome-licence-professionnelle-master-recherche-professionnel-doctorat-debouche.html",
+        "filieres": [
+          "Médecine ;",
+          "Pharmacie"
+        ]
+      },
+      "INSTITUT UNIVERSITAIRE DE TECHNOLOGIES (IUT) BOBO DIOULASSO": {
+        "url": "https://www.oreilleducampus.org/universite-nazi-boni-bobo-dioulasso/124-institut-universitaire-de-technologies-iut-unb-bobo-dioulasso-technologie-finance-entreprise-etat-etudes-formation-etude-en-filiere-offres-formations-diplome-dut-licence-professionnelle-professionnel-debouche.html",
+        "filieres": [
+          "Secrétariat de Direction (SD) ;",
+          "Communication d'Entreprise (CE) ;",
+          "Finances-Comptabilité et Gestion des Entreprises (FCGE) ;",
+          "Marketing et Gestion Commerciale (MGC) ;",
+          "Assurance Banque et Finances (ABF) ;",
+          "Génie Mécanique et Productique (GMP) ;",
+          "Génie Industriel et Maintenance (GIM) ;",
+          "Génie Electrique (option électrotechnique) ;",
+          "Génie Electrique (option électronique) ;",
+          "Génie Civil (GC)"
+        ]
+      }
+    }
+  },
+  "UNIVERSITE JOSEPH KI-ZERBO (Ex UNIVERSITE DE OUAGADOUGOU)": {
+    "url": "https://www.oreilleducampus.org/universite-ouagadougou.html",
+    "etablissements": {
+      "UFR SVT (SCIENCES DE LA VIE ET DE LA TERRE) OUAGA 1": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/108-ufr-svt-sciences-de-la-vie-et-de-la-terre-uo1-ouagadougou-burkina-faso-science-technologie-st-chimie-biologie-geologie-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Chimie ;",
+          "Biologie ;",
+          "Géologie ;",
+          "Sciences et Technologies (ST)"
+        ]
+      },
+      "UFR SEA (SCIENCES EXACTES APPLIQUEES) OUAGA 1": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/109-ufr-sea-sciences-exactes-appliquees-uo-uo1-ouagadougou-burkina-faso-informatique-gestion-reseau-systemes-telecommunication-reseaux-systeme-mathematiques-physiques-chimie-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Mathématique ;",
+          "Physique ;",
+          "Chimie ;",
+          "Informatique;"
+        ]
+      },
+      "UFR SDS (SCIENCES DE LA SANTE) OUAGA 1": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/110-ufr-sds-sciences-de-la-sante-uo-uo1-ouagadougou-burkina-faso-medecine-pharmacie-science-sante-medecine-pharmacie-public-publique-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-doctorat-debouche.html",
+        "filieres": [
+          "Médecine",
+          "Pharmacie",
+          "Technicien Supérieur de Santé (TSS)",
+          "Psychiatrie",
+          "Master-Spécialisation en Santé et Science du Médicament",
+          "Spécialisation-Médecine (4 ans)",
+          "Spécialisation-Pharmacie"
+        ]
+      },
+      "UFR LAC (LETTRES, ARTS ET COMMUNICATION) OUAGA 1": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/111-ufr-lac-lettres-arts-et-communication-uo-burkina-uo1-ouagadougou-burkina-faso-lettre-moderne-journalisme-langages-communications-langues-langue-art-langage-culture-culturelle-culturel-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Allemand ;",
+          "Anglais ;",
+          "Lettres Modernes ;",
+          "Linguistique"
+        ]
+      },
+      "UFR SH (SCIENCES HUMAINES) OUAGA 1": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/112-ufr-sh-sciences-humaines-uo1-ouagadougou-burkina-faso-science-humaine-geographie-histoire-archeologie-sociologie-psychologie-philosophie-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Géographie ;",
+          "Histoire et Archéologie ;",
+          "Philosophie ;",
+          "Psychologie ;",
+          "Sociologie"
+        ]
+      },
+      "IBAM (INSTITUT BURKINABE DES ARTS ET METIERS) OUAGA 1": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/113-ibam-institut-burkinabe-des-arts-et-metiers-uo1-ouaga1-burkina-faso-comptabilite-controle-audit-assurance-banque-finance-secretariat-marketing-gestion-assistant-assistante-assistance-direction-bilingue-methode-informatique-applique-appliquee-gestion-entreprise-administration-gestion-entreprises-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-pro.html",
+        "filieres": [
+          "Comptabilité-Contrôle-Audit (CCA)",
+          "Assurance-Banque-Finance (ABF)",
+          "Marketing et Gestion (MG) ;",
+          "Assistance de Direction Bilingue (ADB) ;",
+          "Méthodes Informatiques Appliquées à la Gestion (MIAGE)"
+        ]
+      },
+      "IPERMIC (INSTITUT PANAFRICAIN D'ETUDE ET DE RECHERCHES SUR LES MEDIAS, L'INFORMATION ET LA COMMUNICATION)": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/114-ipermic-institut-panafricain-etude-recherche-medias-information-communication-uo1-ouaga1-burkina-faso-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Licence des Sciences et Techniques de l'Information et de la Communication avec trois (3) options : Communication d'entreprise / Relation publique ; Communication pour le développement ; Journalisme",
+          "Communication d'entreprise / Relation publique ;",
+          "Communication pour le développement ;",
+          "Journalisme"
+        ]
+      },
+      "ISSP (INSTITUT SUPERIEUR DES SCIENCES DE LA POPULATION)": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/115-issp-institut-superieur-sciences-population-uo1-ouaga1-burkina-faso-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Statistiques Sociales"
+        ]
+      },
+      "IGEDD (INSTITUT DE GENIE DE L'ENVIRONNEMENT ET DU DEVELOPPEMENT DURABLE)": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/116-igedd-institut-genie-environnement-developpement-durable-uo1-ouaga1-burkina-faso-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Licence professionnelle de Génie de l'Environnement avec deux (2) spécialités : Technologies de l'Eau et Assainissement (TEA) Gestion des Pollutions et Aménagement du Territoire",
+          "Technologies de l'Eau et Assainissement (TEA)",
+          "Gestion des Pollutions et Aménagement du Territoire"
+        ]
+      },
+      "IFOAD": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/117-ifoad-uo1-ouaga1-burkina-faso-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Imprimer"
+        ]
+      },
+      "ISSDH": {
+        "url": "https://www.oreilleducampus.org/universite-ouagadougou/118-issdh-uo1-ouaga1-burkina-faso-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "[TEXTE BRUT -- À RELIRE MANUELLEMENT] ISSDH Détails Écrit par Le Webmaster Affichages : 12221"
+        ]
+      }
+    }
+  },
+  "UNIVERSITÉ NORBERT ZONGO (Ex UNIVERSITÉ DE KOUDOUGOU)": {
+    "url": "https://www.oreilleducampus.org/universite-koudougou.html",
+    "etablissements": {
+      "UFR SEG (SCIENCES ECONOMIQUES ET DE GESTION) DE KOUDOUGOU": {
+        "url": "https://www.oreilleducampus.org/universite-koudougou/101-ufr-sciences-economiques-et-de-gestion-seg-unz-koudougou-burkina-faso-serie-economie-politique-agricole-science-entreprise-comptabilite-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Analyse et politiques économiques (APE) ;",
+          "Économie agricole et de l’environnement (EAE) ;",
+          "Économie et Sciences de gestion (ESG) (formation de gestionnaires d’entreprises) ;",
+          "Master en APE"
+        ]
+      },
+      "UFR LSH (LETTRES ET SCIENCES HUMAINES) KOUDOUGOU": {
+        "url": "https://www.oreilleducampus.org/universite-koudougou/102-ufr-lsh-lettres-et-sciences-humaines-unz-koudougou-burkina-faso-serie-science-humaine-lettre-moderne-art-arts-homme-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Géographie ;",
+          "Lettres modernes ;",
+          "Psychologie ;",
+          "Histoire et Archéologie ;",
+          "Philosophie ;",
+          "Science de l’information documentaire (SID)"
+        ]
+      },
+      "UFR ST (SCIENCES ET TECHNOLOGIES) KOUDOUGOU": {
+        "url": "https://www.oreilleducampus.org/universite-koudougou/103-ufr-st-sciences-et-technologies-unz-koudougou-burkina-faso-serie-science-technique-technologie-techniques-mathematique-physique-chimie-svt-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "MPCI (Mathématiques-Physique-Chimie et Informatique) ;",
+          "SVT (Science de la Vie et de la Terre)"
+        ]
+      },
+      "IUT (INSTITUT UNIVERSITAIRE DE TECHNOLOGIE) KOUDOUGOU": {
+        "url": "https://www.oreilleducampus.org/universite-koudougou/104-iut-institut-universitaire-de-technologie-unz-koudougou-burkina-faso-serie-assistant-administratif-finance-entreprise-tourisme-touristique-hotel-hotelier-hoteliere-hoteliers-bureautique-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-professionnel-debouche.html",
+        "filieres": [
+          "Secrétariat / Assistant de Direction (SD) ;",
+          "Assistants Administratifs ;",
+          "Finances Comptabilité (FC) ;",
+          "Tourisme et Hôtellerie (TH) ;",
+          "Marketing et Gestion ;",
+          "Management des entreprises Touristiques et Gestion des entreprises hôtelières ;",
+          "Gestion commerciale (GC) ;",
+          "Génie Civil Bâtiment ;",
+          "Génie Electrique"
+        ]
+      },
+      "ENS (ECOLE NORMALE SUPERIEURE) KOUDOUGOU": {
+        "url": "https://www.oreilleducampus.org/universite-koudougou/105-ens-ecole-normale-superieure-unz-koudougou-burkina-faso-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Le Certificat d’Aptitude au Professorat de l’Enseignement dans les collèges d’Enseignement général (CAP-CEG) ;",
+          "Le Certificat d’Aptitude à l’Enseignement technique (CAET) ;",
+          "Le Certificat d’Aptitude au Professorat de l’Enseignement secondaire (CAPES) ;",
+          "Le Certificat d’Aptitude au Professorat de l’Enseignement technique (CAPET)"
+        ]
+      },
+      "CPU (CENTRE PEDAGOGIQUE UNIVERSITAIRE)": {
+        "url": "https://www.oreilleducampus.org/universite-koudougou/106-cpu-centre-pedagogique-universitaire-unz-koudougou-burkina-faso-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-doctorat-debouche.html",
+        "filieres": [
+          "[TEXTE BRUT -- À RELIRE MANUELLEMENT] CPU (CENTRE PEDAGOGIQUE UNIVERSITAIRE) Détails Écrit par Le Webmaster Affichages : 7266 Offres de formations du Centre Pedagogique Universitaire Des étudiants sont régulièrement recrutés en Master et doctorat. Les enseignements relatifs à ces formations sont exécutés, renforçant ainsi, les compétences en matière d’enseignement universitaire à travers les soutenances de Master et de thèse organisées."
+        ]
+      },
+      "ECOLES DOCTORALES KOUDOUGOU": {
+        "url": "https://www.oreilleducampus.org/universite-koudougou/107-ecole-doctorale-unz-koudougou-burkina-faso-ecoles-doctorales-science-humaine-lettre-etudes-formation-en-filiere-offres-formations-etude-diplome-doctorat-debouche.html",
+        "filieres": [
+          "Laboratoire Interdisciplinaire de didactique des disciplines « LABIDID » ;",
+          "Laboratoire de Psychopédagogie Andragogie, mesure et Evaluation et Politiques Educatives « LAPAME » ;",
+          "Laboratoire de Recherche en Sciences Humaines « LABOSH » ;",
+          "Laboratoire de Recherche en Lettres, Langages, Arts et Communication « LABOLAC » ;",
+          "Laboratoire de Recherche en Energétique et Météorologie de l’espace « LAREME » ;",
+          "Laboratoire de Chimie des Matériaux et de l’Environnement (LACME) ;",
+          "Laboratoire de mathématiques fondamentales et appliquées (LAMFA) ;",
+          "Laboratoire en Sciences de la Vie et de la Terre (LASVT) ;",
+          "Laboratoire d’Economie Régionale et Internationale (LABERI)"
+        ]
+      }
+    }
+  },
+  "UNIVERSITE THOMAS SANKARA (Ex OUAGA 2)": {
+    "url": "https://www.oreilleducampus.org/universite-ouaga-2.html",
+    "etablissements": {
+      "UFR SEG (SCIENCES ECONOMIQUES ET DE GESTION) OUAGA 2": {
+        "url": "https://www.oreilleducampus.org/universite-ouaga-2/227-ufr-sciences-economiques-et-de-gestion-ufr-seg-uo2-ouaga2-ouagadougou-burkina-faso-etudes-economie-gestion-science-economique-gestion-macroeconomie-securite-alimentaire-developpement-durable-finance-controle-collectivite-locale-territoriale-entreprise-organisation-formation-etude-en-filiere-offres-formations-etude-diplome-etudes-licence-professionnelle-dess-etude-master-recherche-professionnel-deb.html",
+        "filieres": [
+          "Sciences économiques ;",
+          "Gestion"
+        ]
+      },
+      "UFR SJP (SCIENCES JURIDIQUES ET POLITIQUES) OUAGA 2": {
+        "url": "https://www.oreilleducampus.org/universite-ouaga-2/228-ufr-sciences-juridiques-et-politiques-sjp-uo2-ouaga2-ouagadougou-burkina-faso-etudes-science-juridique-politique-droit-prive-public-civil-international-fondamental-communautaire-affaire-etudes-formation-etude-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-doctorat-debouche.html",
+        "filieres": [
+          "Droit"
+        ]
+      },
+      "INSTITUT DE FORMATION OUVERTE A DISTANCE (IFOAD)": {
+        "url": "https://www.oreilleducampus.org/universite-ouaga-2/229-institut-de-formation-ouverte-a-distance-ifoad-uo2-ouaga2-burkina-faso-etudes-ong-association-etudes-formation-etude-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel.html",
+        "filieres": [
+          "Licence Professionnelle Management des ONG et des Associations (MOA) ;",
+          "Master Professionnel (M1) Management des ONG et des Associations (MOA) ;",
+          "Master Professionnel (M2) Management des ONG et des Associations (MOA) ;",
+          "Master Pro en Commerce International, Global Marketing et Internationalisation (MIBE)"
+        ]
+      },
+      "INSTITUT UNIVERSITAIRE DE FORMATION INITIALE ET CONTINUE (IUFIC)": {
+        "url": "https://www.oreilleducampus.org/universite-ouaga-2/230-institut-universitaire-de-formation-initiale-et-continue-iufic-uo2-ouaga2-burkina-faso-etudes-science-gestion-politique-droit-industrie-extrative-etudes-formation-etude-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Licence Sciences de Gestion ;",
+          "Licence Professionnelle Sciences Politiques ;",
+          "Master Management de Projets ;",
+          "Master Santé Internationale ;",
+          "Master Génie de l'Environnement ;",
+          "Master Droit et Politiques de l'Environnement ;",
+          "Master Protection et Droits de l'Enfant ;",
+          "Master Politiques de Développement et Gestion des Industries Extratives"
+        ]
+      }
+    }
+  },
+  "UNIVERSITE DE OUAHIGOUYA": {
+    "url": "https://www.oreilleducampus.org/universite-ouahigouya.html",
+    "etablissements": {
+      "UNIVERSITE DE OUAHIGOUYA": {
+        "url": "https://www.oreilleducampus.org/universite-ouahigouya/236-universite-ouahigouya-burkina-faso-grh-gestion-ressource-humaine-medecine-sante-science-technologie-technique-etudes-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Gestion des Ressources Humaines (GRH) ;",
+          "Médecine ;",
+          "Sciences et Technologies"
+        ]
+      }
+    }
+  },
+  "UNIVERSITE DE DEDOUGOU": {
+    "url": "https://www.oreilleducampus.org/universite-dedougou.html",
+    "etablissements": {
+      "UFR / LSH (UNITE DE FORMATION ET DE RECHERCHE EN LETTRES ET SCIENCES HUMAINES)": {
+        "url": "https://www.oreilleducampus.org/universite-dedougou/514-ufr-lsh-dedougou-unite-formation-recherche-lettres-sciences-humaines.html",
+        "filieres": [
+          "Lettres Modernes",
+          "Sociologie et Anthropologie"
+        ]
+      },
+      "IUP (INSTITUT UNIVERSITAIRE PROFESSIONNALISANT)": {
+        "url": "https://www.oreilleducampus.org/universite-dedougou/513-institut-universitaire-professionnalisant-iup-dedougou.html",
+        "filieres": [
+          "Comptabilité - Contrôle - Audit (CCA)",
+          "Méthodes Informatiques Appliquées à la Gestion (MIAGE)"
+        ]
+      },
+      "ISEDR (INSTITUT DES SCIENCES DE L'ENVIRONNEMENT ET DU DEVELOPPEMENT RURAL)": {
+        "url": "https://www.oreilleducampus.org/universite-dedougou/512-isedr-institut-sciences-environnement-developpement-rural-dedougou.html",
+        "filieres": [
+          "Agronomie",
+          "Elevage",
+          "Eaux, Forêts et Environnement"
+        ]
+      },
+      "UFR / SAT (UNITE DE FORMATION ET DE RECHERCHE EN SCIENCES APPLIQUEES ET TECHNOLOGIES)": {
+        "url": "https://www.oreilleducampus.org/universite-dedougou/511-ufr-sat-unite-formation-recherche-sciences-appliquees-technologies-dedougou.html",
+        "filieres": [
+          "Management de la Qualité en Industrie Agroalimentaire",
+          "Science Biologique"
+        ]
+      }
+    }
+  },
+  "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE BANFORA (CUP/B)": {
+    "url": "https://www.oreilleducampus.org/centre-universitaire-polytechnique-banfora.html",
+    "etablissements": {
+      "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE BANFORA (CUP/B)": {
+        "url": "https://www.oreilleducampus.org/centre-universitaire-polytechnique-banfora/232-centre-universitaire-polytechnique-de-banfora-cupb-banfora-burkina-faso-etudes-science-juridique-politique-droit-prive-public-civil-international-fondamental-communautaire-affaire-etude-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Sciences Juridiques et Politiques"
+        ]
+      }
+    }
+  },
+  "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE GAOUA (CUP/G)": {
+    "url": "https://www.oreilleducampus.org/centre-universitaire-polytechnique-gaoua.html",
+    "etablissements": {
+      "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE GAOUA (CUP/G)": {
+        "url": "https://www.oreilleducampus.org/centre-universitaire-polytechnique-gaoua/233-centre-universitaire-polytechnique-de-gaoua-cupg-gaoua-burkina-faso-etudes-science-biologie-biologique-appliquee-patrimoines-culturels-tourisme-touristiques-etude-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Gestion du Patrimoine Culturel et Touristique (GPCT) ;",
+          "Sciences Biologiques et Appliquées (SBA)"
+        ]
+      }
+    }
+  },
+  "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE DORI (CUP/D)": {
+    "url": "https://www.oreilleducampus.org/centre-universitaire-polytechnique-dori.html",
+    "etablissements": {
+      "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE DORI (CUP/D)": {
+        "url": "https://www.oreilleducampus.org/centre-universitaire-polytechnique-dori/234-centre-universitaire-polytechnique-de-dori-cupd-burkina-faso-etudes-elevage-mine-carrieres-mines-carriere-production-animale-amelioration-gestion-exploitation-zoo-etude-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Mine et Carrière ;",
+          "Elevage"
+        ]
+      }
+    }
+  },
+  "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE KAYA (CUP/K)": {
+    "url": "https://www.oreilleducampus.org/centre-universitaire-polytechnique-kaya.html",
+    "etablissements": {
+      "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE KAYA (CUP/K)": {
+        "url": "https://www.oreilleducampus.org/centre-universitaire-polytechnique-kaya/231-centre-universitaire-polytechnique-kaya-cupk-kaya-burkina-faso-etudes-statistique-appliquee-applique-economie-comptabilite-controle-audit-science-technologie-mathematique-physique-etudes-formation-en-filiere-etude-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Statistiques et Informatique Appliquées à l’Economie (SIE) ;",
+          "Comptabilité, Contrôle et Audit (CCA) ;",
+          "Sciences et Technologies, mention Mathématique"
+        ]
+      }
+    }
+  },
+  "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE TENKODOGO (CUP/T)": {
+    "url": "https://www.oreilleducampus.org/centre-polytechnique-universitaire-tenkodogo.html",
+    "etablissements": {
+      "CENTRE UNIVERSITAIRE POLYTECHNIQUE DE TENKODOGO (CUP/T)": {
+        "url": "https://www.oreilleducampus.org/centre-polytechnique-universitaire-tenkodogo/235-centre-universitaire-polytechnique-de-tenkodogo-cup-tenkodogo-burkina-faso-etudes-elevage-aquaculture-peche-agroeconomie-peches-agricole-agriculture-foresterie-forestier-environnement-elevage-agricoles-foret-etude-formation-en-filiere-offres-formations-etude-diplome-licence-professionnelle-master-recherche-professionnel-debouche.html",
+        "filieres": [
+          "Elevage et Aquaculture ;",
+          "Agroéconomie ;",
+          "Agricole et Forestière : Agronomie ; Environnement",
+          "Agronomie ;",
+          "Environnement"
+        ]
+      }
+    }
+  },
+  "UNIVERSITÉ DE FADA N’GOURMA (U-FDG)": {
+    "url": "https://www.oreilleducampus.org/universite-fada-n-gourma.html",
+    "etablissements": {
+      "ECOLE NATIONALE SUPERIEURE D'INGENIEURS DE FADA N'GOURMA (ENSI-F)": {
+        "url": "https://www.oreilleducampus.org/universite-fada-n-gourma/509-ecole-nationale-superieure-d-ingenieurs-de-fada-n-gourma-ensi-f.html",
+        "filieres": [
+          "Génie Civil « Bâtiments & Travaux Publics » (L1GC) ;",
+          "Génie Géologique & Minier « Exploration & Exploitation Minières » (L1GM)"
+        ]
+      }
+    }
+  }
+}

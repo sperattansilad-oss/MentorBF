@@ -1,0 +1,37 @@
+{
+  "UFR/SEA": [
+    "Qui travaille sur l'intelligence artificielle ou les mathématiques appliquées ?",
+    "Quel encadreur pour un mémoire en physique ou en chimie ?"
+  ],
+  "UFR/SVT": [
+    "Qui travaille sur la biologie végétale ou animale ?",
+    "Quel encadreur pour une thèse en écologie ou sciences de la terre ?"
+  ],
+  "UFR/SDS": [
+    "Quel encadreur pour une thèse en santé publique ?",
+    "Qui travaille sur la chirurgie ou la médecine interne ?"
+  ],
+  "UFR/SH": [
+    "Qui travaille sur la sociologie ou l'anthropologie ?",
+    "Quel encadreur pour un mémoire en géographie ou en histoire ?"
+  ],
+  "UFR/LAC": [
+    "Quel encadreur pour un mémoire en littérature ou en linguistique ?",
+    "Qui travaille sur la communication ou le journalisme ?"
+  ],
+  "UFR/SJPEG": [
+    "Quel encadreur pour un mémoire en droit ou en économie ?",
+    "Qui travaille sur la gestion des entreprises ?"
+  ],
+  "UFR/SEG": [
+    "Quel encadreur pour un mémoire de master en économie ?",
+    "Qui travaille sur le financement des petites entreprises rurales ?"
+  ],
+  "ISSP": [
+    "Qui travaille sur l'analyse de données ou la démographie ?",
+    "Quel encadreur pour une thèse en data science ou statistiques appliquées à la population ?"
+  ],
+  "IUT": [
+    "Quel encadreur pour un mémoire technique ou technologique ?"
+  ]
+}
