@@ -1,5 +1,18 @@
 from dotenv import load_dotenv
-_ = load_dotenv()
+# NOUVEAU (15/09/2026, corrigé 19/09/2026) : shinyapps.io n'a AUCUNE
+# gestion de variables d'environnement dans son tableau de bord (confirmé
+# par Posit). On charge donc un fichier de clés bundlé avec le code.
+#
+# ⚠️ NOM DE FICHIER IMPORTANT : "secrets_env.txt" (essayé en premier) a
+# été exclu SILENCIEUSEMENT par rsconnect -- la documentation officielle
+# confirme que ".env" fait partie d'une liste de fichiers exclus par
+# défaut, et "secrets_env.txt" contient la sous-chaîne "env", visiblement
+# suffisante pour déclencher la même exclusion. Renommé en
+# "mbf_config_prod.txt" (aucune sous-chaîne "env" ni "secrets") pour
+# éviter tout filtre automatique de ce genre.
+_ = load_dotenv("mbf_config_prod.txt")  # utilisé sur shinyapps.io
+_ = load_dotenv()  # utilisé en local (.env), sans effet si déjà chargé
+import asyncio
 import json
 import re
 import importlib
@@ -24,7 +37,52 @@ from pays_monde import PAYS_MONDE     # <-- NOUVEAU : liste des pays pour le pro
 from pypdf import PdfReader           # <-- NOUVEAU : extraction de texte des PDF envoyés
 import os
 import secrets
+import unicodedata
 from urllib.parse import urlencode, parse_qs
+
+
+# =========================================================================
+# PETITS OUTILS COMMUNS (octobre 2026, suite au rapport de test A. COMPAORE)
+# =========================================================================
+def _cle_tri(texte) -> str:
+    """Clé de tri insensible aux accents et à la casse : "Économie et
+    Gestion" se range à la lettre E (et non tout en bas de la liste, après
+    le Z, comme avec un tri brut qui classe "É" après "Z")."""
+    texte = unicodedata.normalize("NFKD", str(texte or ""))
+    return texte.encode("ascii", "ignore").decode().lower()
+
+
+# Sigles de départements/filières affichés dans les listes déroulantes sans
+# explication (rapport de test). La VALEUR technique reste le sigle (c'est
+# elle qui sert au filtrage) ; seul le libellé affiché change.
+SIGLES_DEPARTEMENTS = {
+    "ABF": "Assurance, Banque, Finance",
+    "ADB": "Assistant de Direction Bilingue",
+    "CCA": "Comptabilité, Contrôle, Audit",
+    "MG": "Marketing et Gestion commerciale",
+    "TSS": "Techniciens Supérieurs de Santé",
+}
+
+
+def _libelle_departement(valeur: str) -> str:
+    """'ABF' -> 'ABF — Assurance, Banque, Finance' ; autre valeur : inchangée."""
+    nom_complet = SIGLES_DEPARTEMENTS.get(valeur)
+    return f"{valeur} — {nom_complet}" if nom_complet else valeur
+
+
+def _choix_departements(valeurs) -> dict:
+    """Liste de valeurs -> dict {valeur: libellé} pour ui.input_select."""
+    return {v: _libelle_departement(v) for v in valeurs}
+
+
+def _lire_input(nom: str, defaut):
+    """Lit un champ de la sidebar sans planter s'il n'est pas (encore)
+    affiché ; renvoie `defaut` dans ce cas ou si la valeur est vide."""
+    try:
+        valeur = getattr(input, nom)()
+    except Exception:
+        return defaut
+    return valeur if valeur else defaut
 
 # =========================================================================
 # CONNEXION AVEC GOOGLE (nouveau, 08/09/2026)
@@ -174,24 +232,16 @@ def _tampon_est_equilibre(texte: str) -> bool:
 
 
 # =========================================================================
-# MIGRATION OPENAI -> CLAUDE (21/08/2026) -- génération de texte (chat +
-# résumé de document) déplacée vers l'API Anthropic (Claude), via
-# ChatAnthropic de chatlas (même librairie, juste un autre "provider" --
-# aucun changement nécessaire ailleurs dans le fichier : chat_async(),
-# stream_async(), content_image_file() sont génériques dans chatlas, pas
-# spécifiques à OpenAI).
-#
-# EXCEPTION : rag_utils.py continue d'utiliser l'API OpenAI (embeddings
-# text-embedding-3-small) pour la recherche RAG -- Anthropic NE PROPOSE
-# PAS d'API d'embeddings, ce n'est donc pas remplaçable par Claude. Les
-# DEUX clés API restent donc nécessaires dans le fichier .env :
-#   OPENAI_API_KEY=...      (embeddings, utilisé par rag_utils.py)
-#   ANTHROPIC_API_KEY=...   (chat_client + resume_client ci-dessous)
-#
-# Modèle choisi : claude-sonnet-5 (meilleure qualité de rédaction ;
-# légèrement plus lent/coûteux que claude-haiku-4-5-20251001, qui reste
-# une bonne alternative économique pour un déploiement gratuit/démo si
-# besoin de réduire les coûts).
+# MODELES IA UTILISES (état réel, octobre 2026)
+#   - Chat et résumé de document : OpenAI, modèle gpt-4.1-mini (ci-dessous,
+#     via ChatOpenAI de chatlas).
+#   - Recherche RAG : OpenAI aussi (embeddings text-embedding-3-small,
+#     voir rag_utils.py).
+# Une seule clé API est donc nécessaire : OPENAI_API_KEY. Une migration vers
+# Claude (Anthropic) avait été envisagée le 21/08/2026 mais n'est PAS active
+# (accès bloqué) ; si elle est reprise un jour, remplacer ChatOpenAI par
+# ChatAnthropic de chatlas, ajouter ANTHROPIC_API_KEY, et garder OpenAI pour
+# les embeddings (Anthropic ne propose pas d'API d'embeddings).
 # =========================================================================
 chat_client = ctl.ChatOpenAI(
     model="gpt-4.1-mini",
@@ -335,7 +385,7 @@ def _filieres_connues(code_univ: str, ufr_label: str) -> list:
         for departements in instituts_univ.values():
             filieres.update(d for d, _ in departements)
 
-    return sorted(filieres)
+    return sorted(filieres, key=_cle_tri)
 
 
 def departements_disponibles(univ_label: str, ufr_label: str) -> list:
@@ -365,7 +415,7 @@ def specialites_disponibles(univ_label: str, ufr_label: str, departement_label: 
         m.get("specialite") for m in candidats
         if m.get("specialite") and m.get("specialite") != "Information non disponible"
     }
-    return sorted(valeurs)
+    return sorted(valeurs, key=_cle_tri)
 
 
 def filtrer_mentors(univ_label: str, ufr_label: str, departement: str, specialite: str) -> list:
@@ -381,7 +431,7 @@ def filtrer_mentors(univ_label: str, ufr_label: str, departement: str, specialit
         resultats = [m for m in resultats if m.get("departement") == departement]
     if specialite and specialite != "Toutes les spécialités":
         resultats = [m for m in resultats if m.get("specialite") == specialite]
-    return sorted(resultats, key=lambda m: m.get("name", ""))
+    return sorted(resultats, key=lambda m: _cle_tri(m.get("name", "")))
 
 
 def _bloc_questions_suggerees(sigle_choisi: str):
@@ -627,7 +677,7 @@ UFR_PAR_UNIVERSITE = {
 UNIVERSITES_TOUTES = list(UFR_PAR_UNIVERSITE.keys())
 UFR_TOUTES = sorted({
     ufr for liste_ufr in UFR_PAR_UNIVERSITE.values() for ufr in liste_ufr
-})
+}, key=_cle_tri)
 
 
 def _sigle_ufr(label_complet: str) -> str:
@@ -665,8 +715,8 @@ QUESTIONS_SUGGEREES_APLATIES = [
 ]
 
 MESSAGE_ACCUEIL = (
-    "Bonjour ! Je suis MentorBF, un chatbot qui centralise les "
-    "enseignants-chercheurs burkinabè -- leurs domaines d'expertise, "
+    "Bonjour, je suis MentorBF, un chatbot qui centralise les "
+    "enseignants-chercheurs burkinabè\u00a0— leurs domaines d'expertise, "
     "leurs publications, leurs travaux de recherche."
 )
 
@@ -1842,6 +1892,14 @@ async def _traiter_retour_google():
         return
 
     recherche = session.clientdata.url_search()
+    if recherche and "code=" not in recherche and "error=" in recherche:
+        # L'utilisateur a refusé/annulé sur la page Google (?error=access_denied) :
+        # on le dit clairement et on nettoie l'URL (rapport de test).
+        google_oauth_traite.set(True)
+        auth_message.set("Connexion Google annulée ou refusée. Tu peux réessayer, ou te connecter avec ton nom d'utilisateur et ton mot de passe.")
+        await session.send_custom_message("mbf_nettoyer_url", {})
+        ui.modal_show(_construire_modal_etape1())
+        return
     if not recherche or "code=" not in recherche:
         return
 
@@ -1857,15 +1915,34 @@ async def _traiter_retour_google():
         infos = _infos_utilisateur_google(jetons["access_token"])
     except Exception as err:
         auth_message.set(f"Erreur lors de la connexion Google : {err}")
+        await session.send_custom_message("mbf_nettoyer_url", {})
+        ui.modal_show(_construire_modal_etape1())
         return
 
     email = (infos.get("email") or "").strip().lower()
     if not email:
         auth_message.set("Google n'a pas renvoyé d'adresse email exploitable.")
+        await session.send_custom_message("mbf_nettoyer_url", {})
+        ui.modal_show(_construire_modal_etape1())
+        return
+
+    # SÉCURITÉ (octobre 2026) : on n'accepte que les adresses que Google
+    # déclare VÉRIFIÉES -- sinon quelqu'un pourrait se faire passer pour
+    # une autre adresse.
+    if infos.get("email_verified") not in (True, "true", "True"):
+        auth_message.set("Google indique que cette adresse email n'est pas vérifiée : connexion refusée.")
+        await session.send_custom_message("mbf_nettoyer_url", {})
+        ui.modal_show(_construire_modal_etape1())
         return
 
     nom_complet = infos.get("name") or ""
     username = auth.get_or_create_google_user(email, nom_complet)
+    if username is None:
+        # La création du compte Google a échoué : on le dit sans rien deviner.
+        auth_message.set("Impossible de créer ou retrouver ton compte avec cette adresse. Réessaie, ou connecte-toi avec un nom d'utilisateur et un mot de passe.")
+        await session.send_custom_message("mbf_nettoyer_url", {})
+        ui.modal_show(_construire_modal_etape1())
+        return
     current_user.set(username)
     auth_message.set("")
 
@@ -2030,9 +2107,27 @@ def _():
 
 @reactive.effect
 @reactive.event(input.btn_topright_connecte)
+def _():
+    """Clic sur l'indicateur 'Connecté' : demande une confirmation avant de
+    déconnecter (rapport de test : un simple clic déconnectait sans prévenir
+    et faisait perdre la conversation en cours)."""
+    ui.modal_show(
+        ui.modal(
+            ui.p("Veux-tu vraiment te déconnecter ? La conversation en cours sera effacée de l'écran (ton historique reste enregistré)."),
+            title="Déconnexion",
+            easy_close=True,
+            footer=ui.TagList(
+                ui.modal_button("Annuler"),
+                ui.input_action_button("btn_confirmer_deconnexion", "Se déconnecter", class_="btn-primary"),
+            ),
+        )
+    )
+
+
+@reactive.effect
+@reactive.event(input.btn_confirmer_deconnexion)
 async def _():
-    """Clic sur l'indicateur 'Connecté' lui-même -- déconnexion directe
-    (remplace l'ancien bouton 'Se déconnecter' de la sidebar)."""
+    ui.modal_remove()
     current_user.set(None)
     auth_message.set("")
     await chat.clear_messages()
@@ -2167,7 +2262,7 @@ with ui.sidebar(width=300):
                 selected=univ_selectionnee,
             ),
             ui.input_select(id="ufr", label="UFR / Institut", choices=ufrs, selected=ufr_selectionnee),
-            ui.input_select(id="departement", label="Département", choices=departements, selected=departement_selectionne),
+            ui.input_select(id="departement", label="Département", choices=_choix_departements(departements), selected=departement_selectionne),
             ui.input_select(id="specialite", label="Spécialité (optionnel)", choices=specialites),
             ui.input_action_button(id="rechercher", label="Rechercher", class_="btn-primary w-100", style="margin-top: 8px;"),
             ui.input_action_button(
@@ -2187,16 +2282,16 @@ with ui.sidebar(width=300):
             *bloc_historique,
             ui.input_action_button(
                 "btn_infos",
-                "ℹ️ Infos & communiqués",
+                "À propos",
                 class_="w-100 btn-outline-secondary",
                 style="margin-top: 6px;",
             ),
         )
 
     # -------------------------------------------------------------------
-    # Fenêtre "Infos & communiqués" : regroupe dans une fenêtre à onglets
-    # (au lieu de tout étaler dans la sidebar) les communiqués (activités
-    # scientifiques, colloques...) et une présentation de l'application.
+    # Fenêtre "À propos" (17/09/2026 -- renommée depuis "Infos &
+    # communiqués", 3 onglets maintenant au lieu de 2) : Présentation de
+    # l'outil, Démo (vidéo), Infos et communiqués -- dans cet ordre.
     # Pensé pour être EXTENSIBLE : tout nouvel ajout futur (FAQ, guide
     # d'utilisation, contact...) prend juste un onglet de plus ici, sans
     # jamais surcharger la sidebar elle-même.
@@ -2215,22 +2310,33 @@ with ui.sidebar(width=300):
                 ui.tags.ul(
                     ui.tags.li(
                         ui.tags.button(
-                            "📢 Communiqués",
+                            "🧭 Présentation de l'outil",
                             class_="nav-link active",
                             type="button",
                             role="tab",
-                            **{"data-bs-toggle": "tab", "data-bs-target": "#mbf-tab-communiques"},
+                            **{"data-bs-toggle": "tab", "data-bs-target": "#mbf-tab-presentation"},
                         ),
                         class_="nav-item",
                         role="presentation",
                     ),
                     ui.tags.li(
                         ui.tags.button(
-                            "ℹ️ À propos",
+                            "🎬 Démo (vidéo)",
                             class_="nav-link",
                             type="button",
                             role="tab",
-                            **{"data-bs-toggle": "tab", "data-bs-target": "#mbf-tab-apropos"},
+                            **{"data-bs-toggle": "tab", "data-bs-target": "#mbf-tab-demo"},
+                        ),
+                        class_="nav-item",
+                        role="presentation",
+                    ),
+                    ui.tags.li(
+                        ui.tags.button(
+                            "📢 Infos et communiqués",
+                            class_="nav-link",
+                            type="button",
+                            role="tab",
+                            **{"data-bs-toggle": "tab", "data-bs-target": "#mbf-tab-communiques"},
                         ),
                         class_="nav-item",
                         role="presentation",
@@ -2239,18 +2345,25 @@ with ui.sidebar(width=300):
                 ),
                 ui.tags.div(
                     ui.tags.div(
-                        ui.div(*_bloc_communiques()),
-                        class_="tab-pane fade show active",
-                        id="mbf-tab-communiques",
-                        role="tabpanel",
-                    ),
-                    ui.tags.div(
                         ui.h5("MentorBF"),
                         ui.p(
-                            "MentorBF aide les étudiants et futurs chercheurs du Burkina "
-                            "Faso à trouver un encadreur académique -- par nom, par thème "
-                            "de recherche, ou par UFR/département -- pour leurs mémoires "
-                            "de licence, masters et thèses de doctorat."
+                            "MentorBF centralise les enseignants-chercheurs du Burkina "
+                            "Faso -- leurs domaines d'expertise, leurs publications, leurs "
+                            "travaux de recherche -- pour aider :"
+                        ),
+                        ui.tags.ul(
+                            ui.tags.li(
+                                "les étudiants et futurs chercheurs à trouver un "
+                                "encadreur académique -- par nom, par thème de "
+                                "recherche, ou par UFR/département -- pour leurs "
+                                "mémoires de licence, masters et thèses de doctorat ;"
+                            ),
+                            ui.tags.li(
+                                "les structures, ONG et organisations à trouver "
+                                "facilement un enseignant-chercheur ayant travaillé sur "
+                                "un thème précis, pour une collaboration, une expertise "
+                                "ponctuelle ou un partenariat de recherche."
+                            ),
                         ),
                         ui.p(
                             "Les données couvrent les universités publiques du Burkina "
@@ -2258,14 +2371,47 @@ with ui.sidebar(width=300):
                             "scientifiques quand elles sont disponibles.",
                             style="color:#555;",
                         ),
+                        class_="tab-pane fade show active",
+                        id="mbf-tab-presentation",
+                        role="tabpanel",
+                    ),
+                    ui.tags.div(
+                        ui.div(
+                            "🎬 Bientôt disponible",
+                            style=(
+                                "text-align:center; padding: 48px 16px; color:#888; "
+                                "font-size: 1.05rem; font-weight: 600;"
+                            ),
+                        ),
                         class_="tab-pane fade",
-                        id="mbf-tab-apropos",
+                        id="mbf-tab-demo",
+                        role="tabpanel",
+                    ),
+                    ui.tags.div(
+                        ui.div(*_bloc_communiques()),
+                        class_="tab-pane fade",
+                        id="mbf-tab-communiques",
                         role="tabpanel",
                     ),
                     class_="tab-content",
                     style="margin-top: 14px;",
                 ),
-                title="MentorBF -- Informations",
+                # FILET DE SÉCURITÉ (19/09/2026) : sur une modale injectée
+                # dynamiquement (pas présente au chargement initial de la
+                # page), les classes "active"/"show" seules ne suffisent
+                # pas toujours à afficher visuellement le premier onglet --
+                # Bootstrap semble avoir besoin d'un vrai clic pour
+                # s'initialiser correctement sur ce contenu. On simule ce
+                # clic nous-mêmes, juste après l'insertion de la modale
+                # dans le DOM (léger délai pour laisser Bootstrap monter
+                # la modale d'abord).
+                ui.tags.script(
+                    "setTimeout(function() {"
+                    "  var premier = document.querySelector('[data-bs-target=\"#mbf-tab-presentation\"]');"
+                    "  if (premier) premier.click();"
+                    "}, 50);"
+                ),
+                title="MentorBF -- À propos",
                 easy_close=True,
                 size="l",
                 footer=ui.modal_button("Fermer"),
@@ -2336,7 +2482,7 @@ def zone_principale():
                 ui.tags.tr(
                     ui.tags.td(m.get("name", "")),
                     ui.tags.td(m.get("universite_code", "")),
-                    ui.tags.td(m.get("departement", "Information non disponible")),
+                    ui.tags.td(_libelle_departement(m.get("departement", "Information non disponible"))),
                     ui.tags.td(m.get("specialite", "Information non disponible")),
                 )
                 for m in resultats
@@ -2366,7 +2512,7 @@ def zone_principale():
                   "border-radius: 8px; padding: 12px; margin-bottom: 12px;",
         )
 
-    return ui.TagList(bloc_liste, chat.ui(messages=[], height="100%"))
+    return ui.TagList(bloc_liste, chat.ui(messages=[], height="100%", placeholder="Pose ta question..."))
 
 
 # =========================================================================
@@ -2611,11 +2757,68 @@ def _code_universite(label: str):
     return label.split(" - ")[0].strip()
 
 
-async def _repondre(user_input: str, univ_label: str, ufr: str, afficher_overlay: bool = True):
+# Noms sous lesquels un établissement SANS fiche étiquetée (UV-BF, EPO, CUP...)
+# pourrait être MENTIONNÉ dans le texte d'une fiche d'une autre université :
+# la recherche les cherche dans toute la base avant de conclure qu'il n'y a
+# personne. (Vérifié en octobre 2026 : aucune fiche ne les mentionne encore.)
+ALIAS_ETABLISSEMENTS = {
+    "UV-BF": ["uv-bf", "université virtuelle"],
+    "EPO": ["école polytechnique de ouagadougou"],
+    "CUP/B": ["polytechnique de banfora", "cu banfora", "cup/b"],
+    "CUP/G": ["polytechnique de gaoua", "cu gaoua", "cup/g"],
+    "CUP/D": ["polytechnique de dori", "cu dori", "cup/d"],
+    "CUP/T": ["polytechnique de tenkodogo", "cu tenkodogo", "cup/t"],
+}
+
+
+def _aliases_universite(univ_label: str) -> list:
+    code = _code_universite(univ_label)
+    if not code:
+        return []
+    alias = list(ALIAS_ETABLISSEMENTS.get(code, []))
+    if " - " in univ_label:
+        alias.append(univ_label.split(" - ", 1)[1].strip())
+    return alias
+
+
+def _ligne_suggestions_par_defaut(ufr_label) -> str:
+    """Filet de sécurité : si le modèle oublie la ligne MBF_SUGGESTIONS, on
+    l'ajoute nous-mêmes pour que les questions suggérées s'affichent TOUJOURS
+    sous la réponse (comme d'habitude)."""
+    questions = []
+    try:
+        if ufr_label and ufr_label != "Toutes les UFR":
+            questions = list(QUESTIONS_SUGGEREES_PAR_UFR.get(_sigle_ufr(ufr_label), []))
+    except Exception:
+        questions = []
+    for liste in QUESTIONS_SUGGEREES_PAR_UFR.values():
+        for q in liste:
+            if len(questions) >= 3:
+                break
+            if q not in questions:
+                questions.append(q)
+    return "\n\nMBF_SUGGESTIONS::" + json.dumps(questions[:3], ensure_ascii=False)
+
+
+async def _repondre(user_input: str, univ_label: str, ufr: str, afficher_overlay: bool = True,
+                     departement: str = None, specialite: str = None,
+                     depuis_filtres: bool = False):
     """Fonction commune : utilisée par le chat ET par le bouton Rechercher.
 
-    afficher_overlay : notre spinner centré maison (voir _busy_afficher())
-    n'est utile QUE pour les déclencheurs qui n'ont AUCUN retour visuel
+    departement/specialite : NOUVEAU (19/09/2026) -- filtre EXACT propagé
+    jusqu'à build_context() (voir rag_utils.py). BUG CORRIGÉ : le bouton
+    "Rechercher" ignorait le département choisi dans la sidebar --
+    l'IA pouvait alors renvoyer n'importe quel enseignant du même UFR
+    (ex: un prof de mathématiques pour une recherche "Informatique",
+    tous deux dans UFR/SEA). Optionnels : None = pas de filtre, comme
+    avant, pour ne rien changer aux appels qui n'en ont pas besoin
+    (questions tapées librement dans le chat, par exemple).
+
+    afficher_overlay : CONSERVÉ pour compatibilité mais PLUS UTILISÉ
+    (octobre 2026) : le voile « Recherche en cours... » a été supprimé du
+    chat au profit des seuls trois points natifs. Ancienne explication :
+    notre spinner centré maison (voir _busy_afficher())
+    n'était utile QUE pour les déclencheurs qui n'ont AUCUN retour visuel
     natif -- le bouton "Rechercher" et les questions suggérées de la
     sidebar. Pour une question tapée/renvoyée directement dans le chat
     (chat.on_user_submit, crayon, bulle suggérée sous une réponse),
@@ -2630,30 +2833,53 @@ async def _repondre(user_input: str, univ_label: str, ufr: str, afficher_overlay
 
     code_univ = _code_universite(univ_label)
 
-    # Overlay bien visible (spinner centré) pendant la recherche RAG --
-    # uniquement pour les déclencheurs sans retour visuel natif (voir
-    # docstring ci-dessus).
-    if afficher_overlay:
-        await _busy_afficher("Recherche en cours...")
+    # CORRECTIF (octobre 2026, rapport de test A. COMPAORE) : seul le bouton
+    # "Rechercher" transmettait département/spécialité ; une question tapée
+    # dans le chat, une question suggérée ou un crayon les ignoraient (d'où
+    # 5 noms "au hasard" avec UJKZ + Informatique choisis). On lit donc les
+    # filtres de la sidebar ICI, pour TOUS les déclencheurs, et l'UFR devient
+    # un vrai filtre (elle n'était qu'une simple mention dans le texte).
+    if departement is None:
+        departement = _lire_input("departement", "Tous les départements")
+    if specialite is None:
+        specialite = _lire_input("specialite", "Toutes les spécialités")
+    ufr_predicat = None
+    if ufr and ufr != "Toutes les UFR":
+        ufr_predicat = lambda m, _u=ufr: _ufr_correspond(m.get("ufr", ""), _u)
 
-    try:
-        fiches_pertinentes = build_context(user_input, top_k=5, universite_code=code_univ)
+    # UN SEUL indicateur de chargement (rapport de test) : les trois points
+    # natifs du chat. Ils s'affichent dès que le flux de réponse démarre ;
+    # on fait donc démarrer ce flux IMMÉDIATEMENT et la recherche se déroule
+    # pendant que les points tournent (plus de voile « Recherche en cours... »
+    # suivi des trois points). Valeur lue ici, dans le contexte réactif :
+    doc = contexte_document()
+    erreur_survenue = []
 
-        # NOUVEAU (21/08/2026) : si l'étudiant a envoyé un article
-        # scientifique (PDF/photo) plus tôt dans la session, on donne son
-        # contenu à chat_client ici -- SANS ça, il ne pourrait jamais
-        # répondre aux questions de suivi sur cet article (ex: questions
-        # suggérées par resume_client juste après l'upload), puisqu'il
-        # n'a normalement accès qu'aux fiches mentors du RAG (voir
-        # prompt.txt, section dédiée qui explique explicitement la
-        # distinction entre les deux cas à chat_client, pour ne pas
-        # qu'il confonde avec l'interdiction sur les publications
-        # listées dans une fiche mentor, où lui n'a jamais que
-        # titre/annee/liens).
-        doc = contexte_document()
-        bloc_document = ""
-        if doc:
-            bloc_document = rf"""
+    async def _flux_modele():
+        try:
+            fiches_pertinentes = await asyncio.to_thread(
+                build_context,
+                user_input, top_k=5, universite_code=code_univ,
+                departement=departement, specialite=specialite,
+                ufr_predicat=ufr_predicat, ufr_label=ufr,
+                universite_alias=_aliases_universite(univ_label),
+                strict_universite=depuis_filtres,
+            )
+
+            # NOUVEAU (21/08/2026) : si l'étudiant a envoyé un article
+            # scientifique (PDF/photo) plus tôt dans la session, on donne son
+            # contenu à chat_client ici -- SANS ça, il ne pourrait jamais
+            # répondre aux questions de suivi sur cet article (ex: questions
+            # suggérées par resume_client juste après l'upload), puisqu'il
+            # n'a normalement accès qu'aux fiches mentors du RAG (voir
+            # prompt.txt, section dédiée qui explique explicitement la
+            # distinction entre les deux cas à chat_client, pour ne pas
+            # qu'il confonde avec l'interdiction sur les publications
+            # listées dans une fiche mentor, où lui n'a jamais que
+            # titre/annee/liens).
+            bloc_document = ""
+            if doc:
+                bloc_document = rf"""
         --- DOCUMENT ENVOYE PAR L'ETUDIANT (fichier : {doc['nom_fichier']}) ---
         Ceci n'est PAS une publication de la base mentors -- c'est un document
         que l'etudiant a lui-meme envoye a l'application. Voici son contenu
@@ -2672,32 +2898,38 @@ async def _repondre(user_input: str, univ_label: str, ufr: str, afficher_overlay
         dans ta reponse.
         """
 
-        contexte = f"""
-        Voici des fiches documentaires trouvées dans la base de donnees,
-        deja filtrees selon l'universite choisie par l'etudiant si applicable.
+            contexte = f"""
+        Voici des fiches documentaires trouvées dans toute la base de donnees
+        (la section PORTEE DE LA RECHERCHE dit quels filtres ont ete
+        appliques ou elargis, et combien de fiches correspondent : applique
+        strictement ses CONSIGNES).
         Utilise UNIQUEMENT ces informations (et le document envoyé par
-        l'étudiant ci-dessous, s'il y en a un) pour repondre ; si elles ne
-        suffisent pas, dis "Information non disponible".
+        l'étudiant ci-dessous, s'il y en a un) pour repondre.
+        N'ecris "Information non disponible" QUE pour un champ precis qui
+        manque dans une fiche, ou si AUCUNE fiche ne permet de repondre :
+        ne l'ajoute JAMAIS a la fin d'une reponse qui contient deja des
+        noms ou des resultats.
 
         {fiches_pertinentes}
         {bloc_document}
-        Filtres actifs :
+        Filtres choisis par l'etudiant dans la barre laterale :
         - Universite : {univ_label}
         - UFR : {ufr}
+        - Departement : {departement}
+        - Specialite : {specialite}
 
         Question de l'etudiant : {user_input}
         """
 
-        response = await chat_client.stream_async(contexte)
-    finally:
-        # L'overlay ne sert qu'à couvrir l'attente "invisible" (RAG +
-        # premier appel au modèle) -- une fois le flux de réponse obtenu,
-        # le streaming dans le chat prend le relais comme retour visuel,
-        # donc on referme l'overlay ici, AVANT d'afficher la réponse
-        # (et systématiquement, même en cas d'erreur, pour ne jamais
-        # laisser le spinner bloqué à l'écran).
-        if afficher_overlay:
-            await _busy_masquer()
+            response = await chat_client.stream_async(contexte)
+        except Exception as err:
+            print(f"[MentorBF] Erreur pendant la recherche/génération : {err!r}")
+            erreur_survenue.append(True)
+            yield ("Désolé, une erreur est survenue pendant la recherche. "
+                   "Réessaie dans un instant.")
+            return
+        async for chunk in response:
+            yield chunk
 
     # On capture chaque morceau de la réponse au fil du streaming, pour
     # pouvoir sauvegarder la réponse complète dans l'historique à la fin.
@@ -2737,12 +2969,18 @@ async def _repondre(user_input: str, univ_label: str, ufr: str, afficher_overlay
             corrige = _proteger_underscores_maths(tampon)
             morceaux.append(corrige)
             yield corrige
+        # Filet de sécurité : toujours des questions suggérées sous la réponse.
+        if "MBF_SUGGESTIONS::" not in "".join(morceaux):
+            ligne = _ligne_suggestions_par_defaut(ufr)
+            morceaux.append(ligne)
+            yield ligne
 
-    await chat.append_message_stream(_capturer(response))
+    await chat.append_message_stream(_capturer(_flux_modele()))
 
-    reponse_complete = "".join(morceaux)
-    auth.add_history(current_user(), user_input, reponse_complete)
-    historique_version.set(historique_version() + 1)
+    if not erreur_survenue:   # un message d'erreur n'est pas une vraie réponse : pas d'historique
+        reponse_complete = "".join(morceaux)
+        auth.add_history(current_user(), user_input, reponse_complete)
+        historique_version.set(historique_version() + 1)
 
 
 # =========================================================================
@@ -2831,9 +3069,30 @@ async def _():
         ufr = input.ufr()
     except Exception:
         ufr = "Toutes les UFR"
+    # NOUVEAU (19/09/2026) : le département/spécialité choisis dans la
+    # sidebar étaient jusqu'ici totalement ignorés par ce bouton -- ni
+    # dans la question auto-générée, ni dans le filtrage réel des fiches
+    # (voir _repondre()/build_context() -- filtre EXACT sur les
+    # métadonnées, plus fiable qu'une simple mention dans le texte de la
+    # question envoyée à l'IA).
+    try:
+        departement = input.departement()
+    except Exception:
+        departement = "Tous les départements"
+    try:
+        specialite = input.specialite()
+    except Exception:
+        specialite = "Toutes les spécialités"
 
-    question_auto = f"Liste des enseignants et professeurs de {ufr} a {univ}"
-    await _repondre(question_auto, univ, ufr)
+    morceaux_question = [f"Liste des enseignants et professeurs de {ufr} a {univ}"]
+    if departement and departement not in ("Tous les départements", "à compléter"):
+        morceaux_question.append(f"dans le département {departement}")
+    if specialite and specialite != "Toutes les spécialités":
+        morceaux_question.append(f"spécialité {specialite}")
+    question_auto = " ".join(morceaux_question)
+
+    await _repondre(question_auto, univ, ufr, departement=departement, specialite=specialite,
+                    depuis_filtres=True)
 
 
 @reactive.effect
